@@ -1,18 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TpCommandManagerDbContext.Entities;
 
-public class Pizza
+public class Pizza : Nourriture
 {
-    public int id;
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
 
     [Required]
-    public string nom { get; set; }
+    public string Nom { get; set; }
 
     [Required]
-    public List<Ingredient> ingredients { get; set; } = new List<Ingredient>();
+    public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
     [Required]
-    public Pate pate { get; set; }
+    public Pate Pate { get; set; }
+
+    public Pizza() { }
+
 }
 

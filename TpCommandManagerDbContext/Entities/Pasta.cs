@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TpCommandManagerDbContext.Entities;
 
-public class Pasta
+public class Pasta : Nourriture
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]
@@ -14,4 +17,7 @@ public class Pasta
 
     [Required]
     public float Kcal { get; set; }
+
+    public Pasta() { }
+
 }
