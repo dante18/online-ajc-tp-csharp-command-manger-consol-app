@@ -5,6 +5,15 @@ namespace TpCommandManagerDbContext;
 
 public class TpCommandManagerContext : DbContext
 {
+    public DbSet<Pizza> Pizzas => this.Set<Pizza>();
+
+    public DbSet<Pasta> Pastas => this.Set<Pasta>();
+
+    public DbSet<Pate> Pates => this.Set<Pate>();
+
+    public DbSet<Ingredient> Ingredients => this.Set<Ingredient>();
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=localhost;Database=EatDomicile;Trusted_Connection=True;TrustServerCertificate=True;");
