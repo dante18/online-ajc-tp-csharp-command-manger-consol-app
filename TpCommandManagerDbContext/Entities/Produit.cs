@@ -13,6 +13,9 @@ public class Produit
 
     public float Prix { get; set; }
 
+    [Required]
+    public List<ProduitCommande> ProduitCommande { get; set; } = new List<ProduitCommande>();
+
     public Produit() { }
 
 }

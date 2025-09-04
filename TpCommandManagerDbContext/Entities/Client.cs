@@ -20,6 +20,9 @@ public class Client
     [Required]
     public string Telephone { get; set; }
 
+    [Required]
+    public Adresse Adresse { get; set; }
+
     public Client() { }
 
 }

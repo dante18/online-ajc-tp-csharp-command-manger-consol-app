@@ -26,7 +26,7 @@ public class Commande
     public Adresse Adresse { get; set; }
 
     [Required]
-    public List<ProduitCommande> Produits { get; set; } = new List<ProduitCommande>();
+    public List<ProduitCommande> ProduitCommande { get; set; } = new List<ProduitCommande>();
 
     public Commande() { }
 

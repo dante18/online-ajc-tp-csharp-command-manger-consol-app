@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TpCommandManagerDbContext;
 
@@ -11,9 +12,11 @@ using TpCommandManagerDbContext;
 namespace TpCommandManagerDbContext.Migrations
 {
     [DbContext(typeof(TpCommandManagerContext))]
-    partial class TpCommandManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250904070225_AddRelationBetweenProduitAndCommande")]
+    partial class AddRelationBetweenProduitAndCommande
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,9 +66,6 @@ namespace TpCommandManagerDbContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdresseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,8 +79,6 @@ namespace TpCommandManagerDbContext.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AdresseId");
 
                     b.ToTable("Client");
                 });
@@ -268,17 +266,6 @@ namespace TpCommandManagerDbContext.Migrations
                     b.HasIndex("PateId");
 
                     b.ToTable("Pizza");
-                });
-
-            modelBuilder.Entity("TpCommandManagerDbContext.Entities.Client", b =>
-                {
-                    b.HasOne("TpCommandManagerDbContext.Entities.Adresse", "Adresse")
-                        .WithMany()
-                        .HasForeignKey("AdresseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Adresse");
                 });
 
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Commande", b =>
