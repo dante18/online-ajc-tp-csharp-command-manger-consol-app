@@ -7,11 +7,16 @@ public class Pate
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     [Required]
     public string Nom { get; set; }
 
     public Pate() {}
 
+    public Pate(int id, string nom)
+    {
+        this.Id = id;
+        this.Nom = nom;
+    }
 }

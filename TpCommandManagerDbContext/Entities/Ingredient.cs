@@ -7,7 +7,7 @@ public class Ingredient
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     [Required]
     public string Nom { get; set; }
@@ -18,9 +18,13 @@ public class Ingredient
     [Required]
     public bool EstAllergene { get; set; }
 
-    [Required]
-    public bool EstVegetarien { get; set; }
-
     public Ingredient() {}
 
+    public Ingredient(int id, string nom, float kcal, bool estAllergene)
+    {
+        this.Id = id;
+        this.Nom = nom;
+        this.Kcal = kcal;
+        this.EstAllergene = estAllergene;
+    }
 }

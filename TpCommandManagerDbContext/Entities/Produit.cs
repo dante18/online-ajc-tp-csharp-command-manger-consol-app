@@ -7,7 +7,7 @@ public class Produit
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private set; }
+    public int? Id { get; set; }
 
     public string Nom { get; set; }
 
@@ -18,4 +18,10 @@ public class Produit
 
     public Produit() { }
 
+    public Produit(int id, string nom, float prix)
+    {
+        this.Id = id;
+        this.Nom = nom;
+        this.Prix = prix;
+    }
 }
