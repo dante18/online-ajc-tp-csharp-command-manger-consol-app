@@ -13,7 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="MenuManager\ConsoleMenuCatalogueIngredient" />
+    <None Remove="MenuManager\NewFile1.txt" />
     <None Remove="Models\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MenuManager\ConsoleMenuCatalogue.cs" />
   </ItemGroup>
 
   <ItemGroup>
