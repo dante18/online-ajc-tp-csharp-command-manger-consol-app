@@ -24,12 +24,12 @@ public class ConsoleMenuCataloguePate
 
     private void AfficherMenu()
     {
-        Console.WriteLine("\nGestion du catalogue");
-        Console.WriteLine("1 : Liste des pates");
-        Console.WriteLine("2 : Chercher une pate");
-        Console.WriteLine("3 : Créer une pate");
-        Console.WriteLine("4 : Mettre à jour une pate");
-        Console.WriteLine("5 : Supprimer une pate");
+        Console.WriteLine("\nGestion du menu");
+        Console.WriteLine("1 : Liste des pâtes");
+        Console.WriteLine("2 : Chercher une pâte");
+        Console.WriteLine("3 : Créer une pâte");
+        Console.WriteLine("4 : Mettre à jour une pâte");
+        Console.WriteLine("5 : Supprimer une pâte");
         Console.WriteLine("6 : Retourner sur le menu principal");
     }
 
@@ -59,8 +59,14 @@ public class ConsoleMenuCataloguePate
 
     private void AfficherPate(Pate pate)
     {
-        Console.WriteLine($"#{pate.Id} - {pate.Nom}");
-        Console.WriteLine("");
+        if (pate != null)
+        {
+            Console.WriteLine($"#{pate.Id} - {pate.Nom}");
+        }
+        else
+        {
+            throw new Exception("Cette pâte n'existe pas");
+        }
     }
 
     private void ObtenirListPate()
@@ -72,7 +78,7 @@ public class ConsoleMenuCataloguePate
         bool isEmpty = !pates.Any();
         if (isEmpty)
         {
-            Console.WriteLine("Pas de pates.");
+            Console.WriteLine("Pas de pâtes.");
         }
         else
         {
@@ -90,8 +96,6 @@ public class ConsoleMenuCataloguePate
 
         try
         {
-            ObtenirListPate();
-
             Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous regarder ?"));
             AfficherPate(pate);
         }
@@ -128,7 +132,7 @@ public class ConsoleMenuCataloguePate
         }
         catch
         {
-            Console.WriteLine("Cette pizza n'existe pas");
+            Console.WriteLine("Cette pâtes n'existe pas");
         }
     }
 
@@ -142,10 +146,8 @@ public class ConsoleMenuCataloguePate
             Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous supprimer ?"));
             AfficherPate(pate);
 
-            Console.WriteLine($"\nÊtes vous sûr de vouloir supprimer cette pâte ?");
-
-            string choix = GetUserEntry.GetString("(Y/N");
-            if (choix.ToUpper() == "Y")
+            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pâte (O/N) ?");
+            if (choix.ToUpper() == "O")
             {
                 pateManager.SupprimerPate(pate);
             }
