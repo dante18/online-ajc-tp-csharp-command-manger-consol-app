@@ -122,6 +122,8 @@ public class ConsoleMenuCataloguePate
 
         try
         {
+            ObtenirListPate();
+
             Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous modifier ?"));
             AfficherPate(pate);
 
@@ -143,6 +145,8 @@ public class ConsoleMenuCataloguePate
 
         try
         {
+            ObtenirListPate();
+
             Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous supprimer ?"));
             AfficherPate(pate);
 

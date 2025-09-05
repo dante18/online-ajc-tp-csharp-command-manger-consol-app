@@ -128,6 +128,8 @@ public class ConsoleMenuCatalogueIngredient
 
         try
         {
+            ObtenirListIngredient();
+
             Ingredient ingredient = ingredientManager.ObtenirIngredient(GetUserEntry.GetEntier("Quelle ingrédient voulez vous modifier ?"));
             AfficherIngredient(ingredient);
 
@@ -168,6 +170,8 @@ public class ConsoleMenuCatalogueIngredient
 
         try
         {
+            ObtenirListIngredient();
+
             Ingredient ingredient = ingredientManager.ObtenirIngredient(GetUserEntry.GetEntier("Quelle ingrédient voulez vous supprimer ?"));
             AfficherIngredient(ingredient);
 

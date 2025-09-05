@@ -186,9 +186,9 @@ public class ConsoleMenuCataloguePasta
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta souhaitez vous supprimer ?"));
             AfficherPasta(pasta);
 
-            Console.WriteLine($"\nÊtes vous sûr de vouloir supprimer cette pasta ?");
-            string choix = GetUserEntry.GetString("(Y/N");
-            if (choix.ToUpper() == "Y")
+            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pasta ? (O/N) ?");
+
+            if (choix.ToUpper() == "O")
             {
                 pastaManager.SupprimerPasta(pasta);
             }
