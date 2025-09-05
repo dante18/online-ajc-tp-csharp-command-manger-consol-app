@@ -99,6 +99,7 @@ public class ConsoleMenuCataloguePasta
 
         try
         {
+            ObtenirListPasta();
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta voulez vous regarder ?"));
             AfficherPasta(pasta);
         }
@@ -128,6 +129,8 @@ public class ConsoleMenuCataloguePasta
 
         try
         {
+            ObtenirListPasta();
+
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta voulez vous modifier ?"));
             AfficherPasta(pasta);
 
