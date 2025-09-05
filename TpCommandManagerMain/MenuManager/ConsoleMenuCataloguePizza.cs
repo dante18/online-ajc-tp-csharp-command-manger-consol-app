@@ -25,7 +25,7 @@ public class ConsoleMenuCataloguePizza
 
     private void AfficherMenu()
     {
-        Console.WriteLine("\nGestion du catalogue");
+        Console.WriteLine("\nGestion du menu");
         Console.WriteLine("1 : Liste des pizzas");
         Console.WriteLine("2 : Chercher une pizza");
         Console.WriteLine("3 : Créer une pizza");
@@ -105,9 +105,10 @@ public class ConsoleMenuCataloguePizza
     {
         using var context = new TpCommandManagerContext();
         PizzaManager pizzaManager = new PizzaManager(context);
-        Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza voulez vous regarder ?"));
+
         try 
-        { 
+        {
+            Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza voulez vous regarder ?"));
             AfficherPizza(pizza);
         }
         catch (Exception e)
@@ -152,7 +153,7 @@ public class ConsoleMenuCataloguePizza
 
         string nom = GetUserEntry.GetString("Saissez le nom de la pizza");
         float prix = GetUserEntry.GetEntier("Quel sera le prix de la pizza ?");
-        bool vegetarien = (GetUserEntry.GetString("Cette pizza est-elle végétarienne ? O/N").ToUpper() == "O") ? true : false;
+        bool vegetarien = (GetUserEntry.GetString("Cette pizza est-elle végétarienne ? (O/N)").ToUpper() == "O") ? true : false;
 
         List<Ingredient> ingredients = new List<Ingredient>();
         int choixIngredient = 0;
@@ -168,7 +169,7 @@ public class ConsoleMenuCataloguePizza
             Ingredient ingredient = new Ingredient(nomIngredient, kcal, estAllergene);
             ingredients.Add(ingredient);
 
-            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre ingrédient ? O/N").ToUpper() == "N"))
+            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre ingrédient ? (O/N)").ToUpper() == "N"))
             {
                 choixAutreIngredient = false;
             }
@@ -182,6 +183,7 @@ public class ConsoleMenuCataloguePizza
     {
         using var context = new TpCommandManagerContext();
         PizzaManager pizzaManager = new PizzaManager(context);
+        ObtenirListPizza();
 
         try
         {
@@ -257,6 +259,7 @@ public class ConsoleMenuCataloguePizza
     {
         using var context = new TpCommandManagerContext();
         PizzaManager pizzaManager = new PizzaManager(context);
+        ObtenirListPizza();
 
         try
         {
