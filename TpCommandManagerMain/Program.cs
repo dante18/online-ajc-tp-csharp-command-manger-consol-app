@@ -5,7 +5,7 @@ int menuChoix;
 do
 {
     Console.WriteLine($"Bienvenue dans l'application Eat domicile !\n");
-    Console.WriteLine("1 : Gestion du catalogue");
+    Console.WriteLine("1 : Gestion du menu");
     Console.WriteLine("2 : Gestion des commandes");
     Console.WriteLine("3 : Quitter l'application");
 
