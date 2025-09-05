@@ -24,7 +24,7 @@ public class ConsoleMenuCataloguePasta
 
     private void AfficherMenu()
     {
-        Console.WriteLine("\nGestion du catalogue");
+        Console.WriteLine("\nGestion du menu");
         Console.WriteLine("1 : Liste des pastas");
         Console.WriteLine("2 : Chercher une pasta");
         Console.WriteLine("3 : Créer une pasta");
