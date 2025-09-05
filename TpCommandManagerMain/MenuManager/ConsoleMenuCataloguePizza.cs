@@ -68,11 +68,16 @@ public class ConsoleMenuCataloguePizza
 
     private void AfficherPizza(Pizza pizza)
     {
-        string vegetarien = pizza.Vegetarien ? "Oui" : "Non";
-        Console.WriteLine($"#{pizza.Id} - {pizza.Nom} - {pizza.Prix} - vegetarien: {vegetarien} - :");
-
-        Console.WriteLine(String.Join(", ", pizza.Ingredients.Select(i => i.Nom).ToList()));
-        Console.WriteLine("");
+        if (pizza == null)
+        {
+            throw new Exception("Cette pizza n'existe pas");
+        }
+        else
+        {
+            Console.WriteLine($"#{pizza.Id} - {pizza.Nom} - {pizza.Prix} euro - {(pizza.Vegetarien ? "Végétarien" : "Non végétarien")}");
+            Console.WriteLine(String.Join(", ", pizza.Ingredients.Select(i => i.Nom).ToList()));
+            Console.WriteLine("");
+        }
     }
 
 
@@ -100,16 +105,14 @@ public class ConsoleMenuCataloguePizza
     {
         using var context = new TpCommandManagerContext();
         PizzaManager pizzaManager = new PizzaManager(context);
-
-        try
-        {
-            Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza voulez vous regarder ?"));
+        Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza voulez vous regarder ?"));
+        try 
+        { 
             AfficherPizza(pizza);
         }
-
-        catch
+        catch (Exception e)
         {
-            Console.WriteLine("Cette pizza n'existe pas");
+            Console.WriteLine(e.Message);
         }
     }
 
@@ -149,7 +152,7 @@ public class ConsoleMenuCataloguePizza
 
         string nom = GetUserEntry.GetString("Saissez le nom de la pizza");
         float prix = GetUserEntry.GetEntier("Quel sera le prix de la pizza ?");
-        bool vegetarien = (GetUserEntry.GetString("Cette pizza est-elle végétarienne ? Y/N") == "y") ? true : false;
+        bool vegetarien = (GetUserEntry.GetString("Cette pizza est-elle végétarienne ? O/N").ToUpper() == "O") ? true : false;
 
         List<Ingredient> ingredients = new List<Ingredient>();
         int choixIngredient = 0;
@@ -160,12 +163,12 @@ public class ConsoleMenuCataloguePizza
 
             string nomIngredient = GetUserEntry.GetString("Quel est le nom de l'ingrédient ?");
             float kcal = GetUserEntry.GetEntier("Combient de KCal vaut l'ingrédient ?");
-            bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (Y/N)") == "Y") ? true : false;
+            bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (O/N)").ToUpper() == "O") ? true : false;
 
             Ingredient ingredient = new Ingredient(nomIngredient, kcal, estAllergene);
             ingredients.Add(ingredient);
 
-            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre ingrédient ? Y/N").ToLower() == "n"))
+            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre ingrédient ? O/N").ToUpper() == "N"))
             {
                 choixAutreIngredient = false;
             }
@@ -183,7 +186,7 @@ public class ConsoleMenuCataloguePizza
         try
         {
             Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza voulez vous modifier ?"));
-            AfficherPizza(pizza);
+             AfficherPizza(pizza);
 
             Console.WriteLine("Quel champ voulez-vous modifier ?");
             Console.WriteLine($"1 : Nom");
@@ -259,9 +262,8 @@ public class ConsoleMenuCataloguePizza
         {
             Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza souhaitez vous supprimer ?"));
             AfficherPizza(pizza);
-            Console.WriteLine($"\nÊtes vous sûr de vouloir supprimer cette pizza ?");
-            string choix = GetUserEntry.GetString("(Y/N");
-            if (choix.ToUpper() == "Y")
+            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pizza ? (O/N) ");
+            if (choix.ToUpper() == "O" || choix.ToUpper() == "OUI")
             {
                 pizzaManager.SupprimerPizza(pizza);
             }
