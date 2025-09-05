@@ -59,10 +59,17 @@ public class ConsoleMenuCataloguePasta
 
     private void AfficherPasta(Pasta pasta)
     {
-        string vegetarien = pasta.Vegetarien ? "Oui" : "Non";
+        if(pasta is null)
+        {
+            throw new Exception("Cette pasta n'existe pas");
+        }
+        else
+        {
+            string vegetarien = pasta.Vegetarien ? "Oui" : "Non";
 
-        Console.WriteLine($"#{pasta.Id} - {pasta.Nom} - {pasta.Prix} - {pasta.Type} - vegetarien: {vegetarien}: ");
-        Console.WriteLine("");
+            Console.WriteLine($"#{pasta.Id} - {pasta.Nom} - {pasta.Prix} - {pasta.Type} - vegetarien: {vegetarien}: ");
+            Console.WriteLine("");
+        }
     }
 
     private void ObtenirListPasta()
