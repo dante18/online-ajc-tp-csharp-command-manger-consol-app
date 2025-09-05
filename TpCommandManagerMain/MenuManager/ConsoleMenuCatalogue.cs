@@ -13,14 +13,14 @@ public class ConsoleMenuCatalogue
             Console.Clear();
 
             this.TraiterChoix(choix);
-        } while (choix != 6);
+        } while (choix != 7);
 
         return choix;
     }
 
     private void AfficherMenu()
     {
-        Console.WriteLine("\nGestion du catalogue");
+        Console.WriteLine("\nGestion du menu");
         Console.WriteLine("1 : Gestion des Ingrédients");
         Console.WriteLine("2 : Gestion des Boissons");
         Console.WriteLine("3 : Gestion des Pâtes");
