@@ -38,21 +38,66 @@ public class ConsoleMenuCataloguePate
         switch (choix)
         {
             case 1:
-                //
+                ObtenirListPate();
                 break;
             case 2:
-                Console.WriteLine();
-                //ObtenirPate();
+                ObtenirPate();
                 break;
             case 3:
                 AjouterPate();
                 break;
             case 4:
-                Console.WriteLine();
-                //supprimerPate();
+                MiseAJourPate();
                 break;
             case 5:
+                SupprimerPate();
                 break;
+            case 6:
+                break;
+        }
+    }
+
+    private void AfficherPate(Pate pate)
+    {
+        Console.WriteLine($"#{pate.Id} - {pate.Nom}");
+        Console.WriteLine("");
+    }
+
+    private void ObtenirListPate()
+    {
+        using var context = new TpCommandManagerContext();
+        PateManager pateManager = new PateManager(context);
+        List<Pate> pates = pateManager.ObtenirListPate();
+
+        bool isEmpty = !pates.Any();
+        if (isEmpty)
+        {
+            Console.WriteLine("Pas de pates.");
+        }
+        else
+        {
+            foreach (var pate in pates)
+            {
+                AfficherPate(pate);
+            }
+        }
+    }
+
+    private void ObtenirPate()
+    {
+        using var context = new TpCommandManagerContext();
+        PateManager pateManager = new PateManager(context);
+
+        try
+        {
+            ObtenirListPate();
+
+            Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous regarder ?"));
+            AfficherPate(pate);
+        }
+        catch
+        {
+            Console.WriteLine("Cette pâte n'existe pas");
         }
     }
 
@@ -61,9 +106,54 @@ public class ConsoleMenuCataloguePate
         using var context = new TpCommandManagerContext();
 
         string nom = GetUserEntry.GetString("Quel nom voulez vous donner à la pâte ?");
-        Pate pate = new Pate(0, nom);
+        Pate pate = new Pate(nom);
         PateManager pateManager = new PateManager(context);
         pateManager.AjouterPate(pate);
+    }
+
+    private void MiseAJourPate()
+    {
+        using var context = new TpCommandManagerContext();
+        PateManager pateManager = new PateManager(context);
+
+        try
+        {
+            Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous modifier ?"));
+            AfficherPate(pate);
+
+            string nom = GetUserEntry.GetString("Saisissez le nouveau nom de la pâte ?");
+
+            pate.Nom = nom;
+            pateManager.MiseAJourPate(pate);
+        }
+        catch
+        {
+            Console.WriteLine("Cette pizza n'existe pas");
+        }
+    }
+
+    private void SupprimerPate()
+    {
+        using var context = new TpCommandManagerContext();
+        PateManager pateManager = new PateManager(context);
+
+        try
+        {
+            Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous supprimer ?"));
+            AfficherPate(pate);
+
+            Console.WriteLine($"\nÊtes vous sûr de vouloir supprimer cette pâte ?");
+
+            string choix = GetUserEntry.GetString("(Y/N");
+            if (choix.ToUpper() == "Y")
+            {
+                pateManager.SupprimerPate(pate);
+            }
+        }
+        catch
+        {
+            Console.WriteLine("Cette pâte n'existe pas");
+        }
     }
 }
 

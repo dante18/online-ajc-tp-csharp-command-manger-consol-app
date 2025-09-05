@@ -19,4 +19,14 @@ public static class GetUserEntry
 
         return sortie;
     }
+
+    public static bool GetBool(string message)
+    {
+        Console.WriteLine(message);
+        var chaine = Console.ReadLine();
+        if(!Boolean.TryParse(chaine, out var sortie))
+            sortie = false;
+
+        return sortie;
+    }
 }

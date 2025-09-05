@@ -53,7 +53,8 @@ public class ConsoleMenuCatalogue
                 cmPizza.DemarrerLeMemu();
                 break;
             case 6:
-                Console.WriteLine("Lister des pastas");
+                ConsoleMenuCataloguePasta cmPasta = new ConsoleMenuCataloguePasta();
+                cmPasta.DemarrerLeMemu();
                 break;
             case 7:
                 break;
