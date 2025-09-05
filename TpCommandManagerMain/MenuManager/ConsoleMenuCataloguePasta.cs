@@ -169,6 +169,8 @@ public class ConsoleMenuCataloguePasta
         using var context = new TpCommandManagerContext();
         PastaManager pastaManager = new PastaManager(context);
 
+        ObtenirListPasta();
+
         try
         {
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta souhaitez vous supprimer ?"));
