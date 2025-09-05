@@ -1,4 +1,5 @@
-﻿using TpCommandManagerDbContext.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TpCommandManagerDbContext.Entities;
 
 namespace TpCommandManagerDbContext.EntitiesManager;
 
@@ -13,44 +14,29 @@ public class PizzaManager
 
     public List<Pizza> ObtenirListPizza()
     {
-        using (this._context)
-        {
-            return this._context.Pizzas.ToList();
-        }
+        return this._context.Pizzas.Include(p => p.Ingredients).ToList();
     }
 
     public Pizza ObtenirPizza(int id)
     {
-        using (this._context)
-        {
-            return this._context.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
-        }
+        return this._context.Pizzas.Include(p => p.Ingredients).Where(pizza => pizza.Id == id).FirstOrDefault();
     }
 
     public void AjouterPizza(Pizza pizza)
     {
-        using (this._context)
-        {
-            this._context.Pizzas.Add(pizza);
-            this._context.SaveChanges();
-        }
+        this._context.Pizzas.Add(pizza);
+        this._context.SaveChanges();
     }
 
     public void MiseAJourPizza(Pizza pizza)
     {
-        using (this._context)
-        {
-            this._context.Pizzas.Update(pizza);
-            this._context.SaveChanges();
-        }
+        this._context.Pizzas.Update(pizza);
+        this._context.SaveChanges();
     }
 
     public void SupprimerPizza(Pizza pizza)
     {
-        using (this._context)
-        {
-            this._context.Pizzas.Remove(pizza);
-            this._context.SaveChanges();
-        }
+        this._context.Pizzas.Remove(pizza);
+        this._context.SaveChanges();
     }
 }

@@ -5,10 +5,6 @@ namespace TpCommandManagerDbContext.Entities;
 
 public class Pasta : Nourriture
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int? Id { get; set; }
-
     [Required]
     public int Type { get; set; }
 
@@ -17,4 +13,7 @@ public class Pasta : Nourriture
 
     public Pasta() { }
 
+    public Pasta(string nom, float prix, bool vegetarien, string type) : base(nom, prix, vegetarien)
+    {
+    }
 }

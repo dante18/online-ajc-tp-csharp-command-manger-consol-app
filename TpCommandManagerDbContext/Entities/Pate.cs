@@ -14,9 +14,8 @@ public class Pate
 
     public Pate() {}
 
-    public Pate(int id, string nom)
+    public Pate(string nom)
     {
-        this.Id = id;
         this.Nom = nom;
     }
 }

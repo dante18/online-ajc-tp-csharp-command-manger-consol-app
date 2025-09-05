@@ -5,10 +5,6 @@ namespace TpCommandManagerDbContext.Entities;
 
 public class Pizza : Nourriture
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int? Id { get; set; }
-
     [Required]
     public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
@@ -17,7 +13,7 @@ public class Pizza : Nourriture
 
     public Pizza() { }
 
-    public Pizza(int id,string nom, float prix, bool vegetarien, List<Ingredient> ingredients, Pate pate) : base(id, nom, prix, vegetarien)
+    public Pizza(string nom, float prix, bool vegetarien, List<Ingredient> ingredients, Pate pate) : base(nom, prix, vegetarien)
     {
         this.Ingredients = ingredients;
         this.Pate = pate;

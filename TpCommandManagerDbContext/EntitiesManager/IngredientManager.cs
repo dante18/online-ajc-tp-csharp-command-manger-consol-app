@@ -13,44 +13,29 @@ public class IngredientManager
 
     public List<Ingredient> ObtenirListIngredient()
     {
-        using (this._context)
-        {
-            return _context.Ingredients.ToList();
-        }
+        return _context.Ingredients.ToList();
     }
 
     public Ingredient ObtenirIngredient(int id)
     {
-        using (this._context)
-        {
-            return this._context.Ingredients.Where(Ingredient => Ingredient.Id == id).FirstOrDefault();
-        }
+        return this._context.Ingredients.Where(Ingredient => Ingredient.Id == id).FirstOrDefault();
     }
 
     public void AjouterIngredient(Ingredient Ingredient)
     {
-        using (this._context)
-        {
-            this._context.Ingredients.Add(Ingredient);
-            this._context.SaveChanges();
-        }
+        this._context.Ingredients.Add(Ingredient);
+        this._context.SaveChanges();
     }
 
     public void MiseAJourIngredient(Ingredient Ingredient)
     {
-        using (this._context)
-        {
-            this._context.Ingredients.Update(Ingredient);
-            this._context.SaveChanges();
-        }
+        this._context.Ingredients.Update(Ingredient);
+        this._context.SaveChanges();
     }
 
     public void SupprimerIngredient(Ingredient Ingredient)
     {
-        using (this._context)
-        {
-            this._context.Ingredients.Remove(Ingredient);
-            this._context.SaveChanges();
-        }
+        this._context.Ingredients.Remove(Ingredient);
+        this._context.SaveChanges();
     }
 }

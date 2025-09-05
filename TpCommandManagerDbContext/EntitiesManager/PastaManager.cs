@@ -14,44 +14,29 @@ public class PastaManager
 
     public List<Pasta> ObtenirListPasta()
     {
-        using (this._context)
-        {
-            return this._context.Pastas.ToList();
-        }
+        return this._context.Pastas.ToList();
     }
 
-    public List<Pasta> ObtenirPasta(int id)
+    public Pasta ObtenirPasta(int id)
     {
-        using (this._context)
-        {
-            return this._context.Pastas.Where(pasta => pasta.Id == id).ToList();
-        }
+        return this._context.Pastas.Where(pasta => pasta.Id == id).FirstOrDefault();
     }
 
-    public void ajouterPizza(Pasta pasta)
+    public void AjouterPasta(Pasta pasta)
     {
-        using (this._context)
-        {
-            this._context.Pastas.Add(pasta);
-            this._context.SaveChanges();
-        }
+        this._context.Pastas.Add(pasta);
+        this._context.SaveChanges();
     }
 
-    public void miseAJourPizza(Pasta pasta)
+    public void MiseAJourPasta(Pasta pasta)
     {
-        using (this._context)
-        {
-            this._context.Pastas.Update(pasta);
-            this._context.SaveChanges();
-        }
+        this._context.Pastas.Update(pasta);
+        this._context.SaveChanges();
     }
 
-    public void supprimerPasta(Pasta pasta)
+    public void SupprimerPasta(Pasta pasta)
     {
-        using (this._context)
-        {
-            this._context.Pastas.Remove(pasta);
-            this._context.SaveChanges();
-        }
+        this._context.Pastas.Remove(pasta);
+        this._context.SaveChanges();
     }
 }

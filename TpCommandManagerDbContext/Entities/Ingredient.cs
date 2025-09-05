@@ -20,9 +20,8 @@ public class Ingredient
 
     public Ingredient() {}
 
-    public Ingredient(int id, string nom, float kcal, bool estAllergene)
+    public Ingredient(string nom, float kcal, bool estAllergene)
     {
-        this.Id = id;
         this.Nom = nom;
         this.Kcal = kcal;
         this.EstAllergene = estAllergene;

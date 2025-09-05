@@ -18,9 +18,8 @@ public class Produit
 
     public Produit() { }
 
-    public Produit(int id, string nom, float prix)
+    public Produit(string nom, float prix)
     {
-        this.Id = id;
         this.Nom = nom;
         this.Prix = prix;
     }
