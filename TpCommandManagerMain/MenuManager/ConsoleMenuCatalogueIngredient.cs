@@ -24,12 +24,12 @@ public class ConsoleMenuCatalogueIngredient
 
     private void AfficherMenu()
     {
-        Console.WriteLine("\nGestion du catalogue");
-        Console.WriteLine("1 : Liste des ingredients");
-        Console.WriteLine("2 : Chercher une ingredient");
-        Console.WriteLine("3 : Créer une ingredient");
-        Console.WriteLine("4 : Mettre à jour une ingredient");
-        Console.WriteLine("5 : Supprimer une ingredient");
+        Console.WriteLine("\nGestion du menu");
+        Console.WriteLine("1 : Liste des ingrédients");
+        Console.WriteLine("2 : Chercher un ingrédient");
+        Console.WriteLine("3 : Créer un ingrédient");
+        Console.WriteLine("4 : Mettre à jour un ingrédient");
+        Console.WriteLine("5 : Supprimer un ingrédient");
         Console.WriteLine("6 : Retourner sur le menu principal");
     }
 
@@ -59,10 +59,15 @@ public class ConsoleMenuCatalogueIngredient
 
     private void AfficherIngredient(Ingredient ingredient)
     {
-        string allergene = ingredient.EstAllergene ? "Oui" : "Non";
-
-        Console.WriteLine($"#{ingredient.Id} - {ingredient.Nom} - {ingredient.Kcal} - allergene: {allergene}");
-        Console.WriteLine("");
+        if (ingredient != null)
+        {
+            string allergene = ingredient.EstAllergene ? "Oui" : "Non";
+            Console.WriteLine($"#{ingredient.Id} - {ingredient.Nom} - {ingredient.Kcal} - allergene: {allergene}");
+        }
+        else
+        {
+            throw new Exception("Cette ingrédient n'existe pas");
+        }
     }
 
     private void ObtenirListIngredient()
@@ -105,11 +110,11 @@ public class ConsoleMenuCatalogueIngredient
     {
         using var context = new TpCommandManagerContext();
 
-        Console.WriteLine("\nAjouter une ingrédient");
+        Console.WriteLine("\nAjouter un ingrédient");
 
         string nom = GetUserEntry.GetString("Quel est le nom de l'ingrédient ?");
         float kcal = GetUserEntry.GetEntier("Combient de KCal vaut l'ingrédient ?");
-        bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (Y/N)") == "Y") ? true : false;
+        bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (O/N)") == "O") ? true : false;
 
         Ingredient i = new Ingredient(nom, kcal, estAllergene);
         IngredientManager im = new IngredientManager(context);
@@ -126,16 +131,33 @@ public class ConsoleMenuCatalogueIngredient
             Ingredient ingredient = ingredientManager.ObtenirIngredient(GetUserEntry.GetEntier("Quelle ingrédient voulez vous modifier ?"));
             AfficherIngredient(ingredient);
 
-            string nom = GetUserEntry.GetString("Saisissez le nouveau nom de l'ingédient ?");
-            int kCal = GetUserEntry.GetEntier("Saisissez le nombre de KCal ?");
+            Console.WriteLine("Quel champ voulez-vous modifier ?");
+            Console.WriteLine($"1 : Nom");
+            Console.WriteLine($"2 : KCal");
+            Console.WriteLine("3 : Revenir au menu précédent");
+            int choix = GetUserEntry.GetEntier("\n");
 
-            ingredient.Nom = nom;
-            ingredient.Kcal = kCal;
-            ingredientManager.MiseAJourIngredient(ingredient);
+            switch (choix)
+            {
+                case 1:
+                    string nom = GetUserEntry.GetString("Saisissez le nouveau nom de l'ingédient ?");
+                    ingredient.Nom = nom;
+                    ingredientManager.MiseAJourIngredient(ingredient);
+                    AfficherIngredient(ingredient);
+                    break;
+                case 2:
+                    int kCal = GetUserEntry.GetEntier("Saisissez le nombre de KCal ?");
+                    ingredient.Kcal = kCal;
+                    ingredientManager.MiseAJourIngredient(ingredient);
+                    AfficherIngredient(ingredient);
+                    break;
+                default:
+                    break;
+            }
         }
         catch
         {
-            Console.WriteLine("Cette pizza n'existe pas");
+            Console.WriteLine("Cette ingrédient n'existe pas");
         }
     }
 
@@ -149,10 +171,8 @@ public class ConsoleMenuCatalogueIngredient
             Ingredient ingredient = ingredientManager.ObtenirIngredient(GetUserEntry.GetEntier("Quelle ingrédient voulez vous supprimer ?"));
             AfficherIngredient(ingredient);
 
-            Console.WriteLine($"\nÊtes vous sûr de vouloir supprimer cette ingrédient ?");
-
-            string choix = GetUserEntry.GetString("(Y/N");
-            if (choix.ToUpper() == "Y")
+            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette ingrédient (O/N) ?");
+            if (choix.ToUpper() == "O")
             {
                 ingredientManager.SupprimerIngredient(ingredient);
             }
