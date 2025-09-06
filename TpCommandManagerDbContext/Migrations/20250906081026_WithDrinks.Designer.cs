@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TpCommandManagerDbContext;
 
@@ -11,9 +12,11 @@ using TpCommandManagerDbContext;
 namespace TpCommandManagerDbContext.Migrations
 {
     [DbContext(typeof(TpCommandManagerContext))]
-    partial class TpCommandManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250906081026_WithDrinks")]
+    partial class WithDrinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,36 @@ namespace TpCommandManagerDbContext.Migrations
                     b.ToTable("Adresse");
                 });
 
+            modelBuilder.Entity("TpCommandManagerDbContext.Entities.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdresseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prenom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telephone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdresseId");
+
+                    b.ToTable("Client");
+                });
+
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Commande", b =>
                 {
                     b.Property<int>("Id")
@@ -66,6 +99,9 @@ namespace TpCommandManagerDbContext.Migrations
                     b.Property<int>("AdresseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateCommande")
                         .HasColumnType("datetime2");
 
@@ -75,16 +111,13 @@ namespace TpCommandManagerDbContext.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UtilisateurId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AdresseId");
 
-                    b.HasIndex("UtilisateurId");
+                    b.HasIndex("ClientId");
 
-                    b.ToTable("Commandes");
+                    b.ToTable("Commande");
                 });
 
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Ingredient", b =>
@@ -182,40 +215,6 @@ namespace TpCommandManagerDbContext.Migrations
                     b.ToTable("ProduitCommande");
                 });
 
-            modelBuilder.Entity("TpCommandManagerDbContext.Entities.Utilisateur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AdresseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdresseId");
-
-                    b.ToTable("Utilisateurs");
-                });
-
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Boisson", b =>
                 {
                     b.HasBaseType("TpCommandManagerDbContext.Entities.Produit");
@@ -271,6 +270,17 @@ namespace TpCommandManagerDbContext.Migrations
                     b.ToTable("Pizzas");
                 });
 
+            modelBuilder.Entity("TpCommandManagerDbContext.Entities.Client", b =>
+                {
+                    b.HasOne("TpCommandManagerDbContext.Entities.Adresse", "Adresse")
+                        .WithMany()
+                        .HasForeignKey("AdresseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Adresse");
+                });
+
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Commande", b =>
                 {
                     b.HasOne("TpCommandManagerDbContext.Entities.Adresse", "Adresse")
@@ -279,15 +289,15 @@ namespace TpCommandManagerDbContext.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TpCommandManagerDbContext.Entities.Utilisateur", "Utilisateur")
+                    b.HasOne("TpCommandManagerDbContext.Entities.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("UtilisateurId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Adresse");
 
-                    b.Navigation("Utilisateur");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Ingredient", b =>
@@ -314,17 +324,6 @@ namespace TpCommandManagerDbContext.Migrations
                         .HasForeignKey("ProduitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TpCommandManagerDbContext.Entities.Utilisateur", b =>
-                {
-                    b.HasOne("TpCommandManagerDbContext.Entities.Adresse", "Adresse")
-                        .WithMany()
-                        .HasForeignKey("AdresseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Adresse");
                 });
 
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Boisson", b =>

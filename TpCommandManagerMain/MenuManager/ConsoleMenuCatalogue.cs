@@ -39,7 +39,8 @@ public class ConsoleMenuCatalogue
                 cmIngredient.DemarrerLeMemu();
                 break;
             case 2:
-                Console.WriteLine("Lister des boissons");
+                ConsoleMenuCatalogueBoisson cmBoisson = new ConsoleMenuCatalogueBoisson();
+                cmBoisson.DemarrerLeMemu();
                 break;
             case 3:
                 ConsoleMenuCataloguePate cmPate = new ConsoleMenuCataloguePate();
