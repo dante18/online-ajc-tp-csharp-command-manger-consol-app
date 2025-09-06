@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace TpCommandManagerDbContext.Entities;
 
 public class Boisson : Produit

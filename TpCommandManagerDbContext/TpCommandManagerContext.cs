@@ -13,6 +13,7 @@ public class TpCommandManagerContext : DbContext
 
     public DbSet<Ingredient> Ingredients => this.Set<Ingredient>();
 
+    public DbSet<Boisson> Boissons => this.Set<Boisson>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -26,9 +27,9 @@ public class TpCommandManagerContext : DbContext
         modelBuilder.Entity<Pasta>().UseTptMappingStrategy();
         modelBuilder.Entity<Nourriture>().UseTptMappingStrategy();
         modelBuilder.Entity<Produit>().UseTptMappingStrategy();
+        modelBuilder.Entity<Boisson>().UseTpcMappingStrategy();
 
         modelBuilder.Entity<Adresse>();
-        modelBuilder.Entity<Boisson>();
         modelBuilder.Entity<Client>();
         modelBuilder.Entity<Commande>();
         modelBuilder.Entity<ProduitCommande>();
