@@ -17,4 +17,7 @@ public class Boisson : Produit
 
     public Boisson() { }
 
+    public Boisson(string nom, float prix, bool estPetillante, string type)
+    {
+    }
 }

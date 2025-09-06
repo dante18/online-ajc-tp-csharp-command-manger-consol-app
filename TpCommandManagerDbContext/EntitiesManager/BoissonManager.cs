@@ -22,7 +22,7 @@ public class BoissonManager
         return this._context.Boissons.Where(boisson => boisson.Id == id).FirstOrDefault();
     }
 
-    public void AjouterPasta(Boisson boisson)
+    public void AjouterBoisson(Boisson boisson)
     {
         this._context.Boissons.Add(boisson);
         this._context.SaveChanges();
