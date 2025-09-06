@@ -86,7 +86,7 @@ namespace TpCommandManagerMain.MenuManager
             bool isEmpty = !boissons.Any();
             if (isEmpty)
             {
-                Console.WriteLine("Pas de pastas.");
+                Console.WriteLine("Pas de boissons.");
             }
             else
             {
