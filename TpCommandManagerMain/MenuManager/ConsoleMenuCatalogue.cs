@@ -46,7 +46,8 @@ public class ConsoleMenuCatalogue
                 cmPate.DemarrerLeMemu();
                 break;
             case 4:
-                Console.WriteLine("Lister des burgers");
+                ConsoleMenuCatalogueBurger cmBurger = new ConsoleMenuCatalogueBurger();
+                cmBurger.DemarrerLeMemu();
                 break;
             case 5:
                 ConsoleMenuCataloguePizza cmPizza = new ConsoleMenuCataloguePizza();
