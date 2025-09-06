@@ -27,4 +27,13 @@ public class Adresse
 
     public Adresse() { }
 
+    public Adresse(string rue, string codePostal, string ville, string region, string pays)
+    {
+        this.Rue = rue;
+        this.CodePostal = codePostal;
+        this.Ville = ville;
+        this.Region = region;
+        this.Pays = pays;
+    }
+
 }

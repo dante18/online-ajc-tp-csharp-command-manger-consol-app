@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TpCommandManagerDbContext.Entities;
 
-public class Client
+public class Utilisateur
 {
 
     [Key]
@@ -21,8 +21,20 @@ public class Client
     public string Telephone { get; set; }
 
     [Required]
+    public string Email { get; set; }
+
+    [Required]
     public Adresse Adresse { get; set; }
 
-    public Client() { }
+    public Utilisateur() { }
+
+    public Utilisateur(string nom, string prenom, string telephone, string email, Adresse adresse)
+    {
+        this.Nom = nom;
+        this.Prenom = prenom;
+        this.Telephone = telephone;
+        this.Email = email;
+        this.Adresse = adresse;
+    }
 
 }
