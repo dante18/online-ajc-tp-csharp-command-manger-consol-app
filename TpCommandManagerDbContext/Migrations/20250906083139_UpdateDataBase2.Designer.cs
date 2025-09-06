@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TpCommandManagerDbContext;
 
@@ -11,9 +12,11 @@ using TpCommandManagerDbContext;
 namespace TpCommandManagerDbContext.Migrations
 {
     [DbContext(typeof(TpCommandManagerContext))]
-    partial class TpCommandManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250906083139_UpdateDataBase2")]
+    partial class UpdateDataBase2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,10 +196,6 @@ namespace TpCommandManagerDbContext.Migrations
                     b.Property<int>("AdresseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -226,7 +225,7 @@ namespace TpCommandManagerDbContext.Migrations
                     b.Property<bool>("Petillant")
                         .HasColumnType("bit");
 
-                    b.ToTable("Boissons");
+                    b.ToTable("Boisson");
                 });
 
             modelBuilder.Entity("TpCommandManagerDbContext.Entities.Nourriture", b =>

@@ -6,8 +6,9 @@ do
 {
     Console.WriteLine($"Bienvenue dans l'application Eat domicile !\n");
     Console.WriteLine("1 : Gestion du menu");
-    Console.WriteLine("2 : Gestion des commandes");
-    Console.WriteLine("3 : Quitter l'application");
+    Console.WriteLine("2 : Gestion des utilisateurs");
+    Console.WriteLine("3 : Gestion des commandes");
+    Console.WriteLine("4 : Quitter l'application");
 
     menuChoix = GetUserEntry.GetEntier("Que souhaitez-vous faire ?");
 
@@ -19,15 +20,20 @@ do
             break;
 
         case 2:
+            ConsoleMenuUtilisateur utilisateurManager = new ConsoleMenuUtilisateur();
+            menuChoix = utilisateurManager.DemarrerLeMemu();
+            break;
+
+        case 3:
             ConsoleMenuCommande commandeManager = new ConsoleMenuCommande();
             menuChoix = commandeManager.DemarrerLeMemu();
             break;
 
-        case 3:
+        case 4:
             break;
 
         default:
             Console.WriteLine("Action non prise en charge ou non autorisée");
             break;
     }
-} while (menuChoix != 3);
+} while (menuChoix != 4);

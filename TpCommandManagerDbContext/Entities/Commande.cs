@@ -20,7 +20,7 @@ public class Commande
     public bool Status { get; set; }
 
     [Required]
-    public Client Client {  get; set; }
+    public Utilisateur Utilisateur {  get; set; }
 
     [Required]
     public Adresse Adresse { get; set; }
@@ -30,4 +30,14 @@ public class Commande
 
     public Commande() { }
 
+    public Commande(DateTime dateCommande, DateTime dateLivraison, bool status, Utilisateur utilisateur,
+        Adresse adresse, List<ProduitCommande> produitCommande)
+    {
+        this.DateCommande = dateCommande;
+        this.DateLivraison = dateLivraison;
+        this.Status = status;
+        this.Utilisateur = utilisateur;
+        this.Adresse = adresse;
+        this.ProduitCommande = produitCommande;
+    }
 }
