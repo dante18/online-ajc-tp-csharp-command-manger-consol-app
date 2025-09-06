@@ -26,8 +26,8 @@ public class TpCommandManagerContext : DbContext
         modelBuilder.Entity<Burger>().UseTptMappingStrategy();
         modelBuilder.Entity<Pasta>().UseTptMappingStrategy();
         modelBuilder.Entity<Nourriture>().UseTptMappingStrategy();
+        modelBuilder.Entity<Boisson>().UseTptMappingStrategy();
         modelBuilder.Entity<Produit>().UseTptMappingStrategy();
-        modelBuilder.Entity<Boisson>().UseTpcMappingStrategy();
 
         modelBuilder.Entity<Adresse>();
         modelBuilder.Entity<Client>();
