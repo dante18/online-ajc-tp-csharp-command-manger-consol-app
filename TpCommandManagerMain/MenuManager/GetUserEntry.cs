@@ -1,4 +1,6 @@
-﻿namespace TpCommandManagerMain.MenuManager;
+﻿using System.Globalization;
+
+namespace TpCommandManagerMain.MenuManager;
 
 public static class GetUserEntry
 {
@@ -28,5 +30,23 @@ public static class GetUserEntry
             sortie = false;
 
         return sortie;
+    }
+
+    public static DateTime GetDate(string message)
+    {
+        while (true)
+        {
+            Console.Write($"{message} (JJ/MM/AAAA) : ");
+            string? saisie = Console.ReadLine();
+
+            if (DateTime.TryParseExact(saisie, "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var date))
+            {
+                return date;
+            }
+
+            Console.WriteLine("Format de la date invalide, réessayez !");
+        }
     }
 }
