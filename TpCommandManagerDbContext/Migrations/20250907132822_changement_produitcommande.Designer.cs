@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TpCommandManagerDbContext;
 
@@ -11,9 +12,11 @@ using TpCommandManagerDbContext;
 namespace TpCommandManagerDbContext.Migrations
 {
     [DbContext(typeof(TpCommandManagerContext))]
-    partial class TpCommandManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250907132822_changement_produitcommande")]
+    partial class changement_produitcommande
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace TpCommandManagerDbContext.Migrations
                     b.Property<DateTime>("DateCommande")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateLivraison")
+                    b.Property<DateTime>("DateLivraison")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")

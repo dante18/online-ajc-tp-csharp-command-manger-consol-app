@@ -57,7 +57,7 @@ public class ConsoleMenuCataloguePasta
         }
     }
 
-    private void AfficherPasta(Pasta pasta)
+    private void Afficher(Pasta pasta)
     {
         if(pasta is null)
         {
@@ -87,7 +87,7 @@ public class ConsoleMenuCataloguePasta
         {
             foreach (var pasta in pastas)
             {
-                AfficherPasta(pasta);
+                Afficher(pasta);
             }
         }
     }
@@ -101,7 +101,7 @@ public class ConsoleMenuCataloguePasta
         {
             ObtenirListPasta();
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta voulez vous regarder ?"));
-            AfficherPasta(pasta);
+            Afficher(pasta);
         }
         catch 
         {
@@ -115,9 +115,10 @@ public class ConsoleMenuCataloguePasta
 
         string nom = GetUserEntry.GetString("Quel nom voulez vous donner à la pasta ?");
         float prix = GetUserEntry.GetEntier("Quel prix voulez vous donner à la pasta ?");
-        bool estVegetarienne = GetUserEntry.GetBool("Cette pasta est végétarienne ?");
-        string type = GetUserEntry.GetString("Quel type voulez vous donner à la pasta ?");
-        Pasta pasta = new Pasta(nom, prix, estVegetarienne, type);
+        bool estVegetarien = GetUserEntry.GetBool("Cette pasta est végétarienne ? (O/N)");
+        int type = GetUserEntry.GetEntier("Quel type voulez vous donner à la pasta ?");
+        int kCal = GetUserEntry.GetEntier("Combien de kCal y'a t-il dans ce plat ?");
+        Pasta pasta = new Pasta(nom, prix, estVegetarien, type, kCal);
         PastaManager pastaManager = new PastaManager(context);
         pastaManager.AjouterPasta(pasta);
     }
@@ -132,7 +133,7 @@ public class ConsoleMenuCataloguePasta
             ObtenirListPasta();
 
             Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta voulez vous modifier ?"));
-            AfficherPasta(pasta);
+            Afficher(pasta);
 
             Console.WriteLine("Quel champ voulez-vous modifier ?");
             Console.WriteLine($"1 : Nom");
@@ -146,14 +147,14 @@ public class ConsoleMenuCataloguePasta
                     string nouveauNom = GetUserEntry.GetString("Quel sera le nouveau nom de la pasta ?");
                     pasta.Nom = nouveauNom;
                     pastaManager.MiseAJourPasta(pasta);
-                    AfficherPasta(pasta);
+                    Afficher(pasta);
                     break;
 
                 case 2:
                     float nouveauPrix = GetUserEntry.GetEntier("Quel sera le nouveau prix de la pasta ?");
                     pasta.Prix = nouveauPrix;
                     pastaManager.MiseAJourPasta(pasta);
-                    AfficherPasta(pasta);
+                    Afficher(pasta);
                     break;
 
                 case 3:
@@ -161,7 +162,7 @@ public class ConsoleMenuCataloguePasta
                     bool nouvVegetarien = Convert.ToBoolean(nouvVegetarienAsInt);
                     pasta.Vegetarien = nouvVegetarien;
                     pastaManager.MiseAJourPasta(pasta);
-                    AfficherPasta(pasta);
+                    Afficher(pasta);
                     break;
 
                 default:
@@ -183,12 +184,10 @@ public class ConsoleMenuCataloguePasta
 
         try
         {
-            Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pasta souhaitez vous supprimer ?"));
-            AfficherPasta(pasta);
-
-            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pasta ? (O/N) ?");
-
-            if (choix.ToUpper() == "O")
+            Pasta pasta = pastaManager.ObtenirPasta(GetUserEntry.GetEntier("Quelle pizza souhaitez vous supprimer ?"));
+            Afficher(pasta);
+            bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette pizza ? (O/N) ");
+            if (choix)
             {
                 pastaManager.SupprimerPasta(pasta);
             }

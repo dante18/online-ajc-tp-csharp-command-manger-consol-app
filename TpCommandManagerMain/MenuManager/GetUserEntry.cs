@@ -5,6 +5,13 @@ namespace TpCommandManagerMain.MenuManager;
 public static class GetUserEntry
 {
 
+    private static List<string> _trueValues = [
+        "oui",
+        "o",
+        "yes",
+        "y"
+        ];
+
     public static string? GetString(string message)
     {
         Console.WriteLine(message);
@@ -26,10 +33,7 @@ public static class GetUserEntry
     {
         Console.WriteLine(message);
         var chaine = Console.ReadLine();
-        if(!Boolean.TryParse(chaine, out var sortie))
-            sortie = false;
-
-        return sortie;
+        return _trueValues.Contains(chaine, StringComparer.OrdinalIgnoreCase);
     }
 
     public static DateTime GetDate(string message)

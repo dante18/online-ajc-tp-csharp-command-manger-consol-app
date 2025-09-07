@@ -18,6 +18,7 @@ public class TpCommandManagerContext : DbContext
     public DbSet<Commande> Commandes => this.Set<Commande>();
 
     public DbSet<Produit> Produit => this.Set<Produit>();
+    public DbSet<Nourriture> Nourriture => this.Set<Nourriture>();
 
     public DbSet<Burger> Burger => this.Set<Burger>();
     

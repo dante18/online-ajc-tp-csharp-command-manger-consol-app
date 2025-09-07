@@ -70,9 +70,9 @@ namespace TpCommandManagerMain.MenuManager
             }
             else
             {
-                string petillant = boisson.Petillant ? "Oui" : "Non";
+                string petillant = boisson.Petillant ? "Pétillant" : "Non pétillant";
 
-                Console.WriteLine($"#{boisson.Id} - {boisson.Nom} - {petillant} - {boisson.Prix}: ");
+                Console.WriteLine($"#{boisson.Id} : {boisson.Nom} - {petillant} - {boisson.Prix} Euros - {boisson.Kcal}kCal");
                 Console.WriteLine("");
             }
         }
@@ -120,9 +120,9 @@ namespace TpCommandManagerMain.MenuManager
 
             string nom = GetUserEntry.GetString("Quel nom voulez vous donner à la boisson ?");
             float prix = GetUserEntry.GetEntier("Quel prix voulez vous donner à la boisson ?");
-            bool estPetillante = GetUserEntry.GetBool("Cette boisson est pétillante ?");
-            string type = GetUserEntry.GetString("Quel type voulez vous donner à la boisson ?");
-            Boisson boisson = new Boisson(nom, prix, estPetillante, type);
+            bool estPetillante = GetUserEntry.GetBool("Est-ce que la boisson est pétillante ? (O/N)");
+            int kcal = GetUserEntry.GetEntier("Combien de kCal contient cette boisson ?");
+            Boisson boisson = new Boisson(nom, prix, estPetillante, kcal);
             BoissonManager boissonManager = new BoissonManager(context);
             boissonManager.AjouterBoisson(boisson);
         }
@@ -142,7 +142,8 @@ namespace TpCommandManagerMain.MenuManager
                 Console.WriteLine("Quel champ voulez-vous modifier ?");
                 Console.WriteLine($"1 : Nom");
                 Console.WriteLine($"2 : Prix");
-                Console.WriteLine($"3 : Kcal");
+                Console.WriteLine($"3 : Pétillant");
+                Console.WriteLine("4 : kCal");
                 int choix = GetUserEntry.GetEntier("");
 
                 switch (choix)
@@ -162,9 +163,15 @@ namespace TpCommandManagerMain.MenuManager
                         break;
 
                     case 3:
-                        int nouvPetillanteAsInt = GetUserEntry.GetEntier("Est-ce que la boisson est pétillante ?");
-                        bool nouvPetillante = Convert.ToBoolean(nouvPetillanteAsInt);
-                        boisson.Petillant = nouvPetillante;
+                        bool estPetillante = GetUserEntry.GetBool("Est-ce que la boisson est pétillante ? (O/N)");
+                        boisson.Petillant = estPetillante;
+                        boissonManager.MiseAJourBoisson(boisson);
+                        AfficherBoisson(boisson);
+                        break;
+
+                    case 4:
+                        int nouveauKCal = GetUserEntry.GetEntier("Combien de kCal contient cette boisson ?");
+                        boisson.Kcal = nouveauKCal;
                         boissonManager.MiseAJourBoisson(boisson);
                         AfficherBoisson(boisson);
                         break;
@@ -191,9 +198,9 @@ namespace TpCommandManagerMain.MenuManager
                 Boisson boisson = boissonManager.ObtenirBoisson(GetUserEntry.GetEntier("Quelle boisson souhaitez vous supprimer ?"));
                 AfficherBoisson(boisson);
 
-                string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette boisson ? (O/N) ?");
+                bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette boisson ? (O/N) ?");
 
-                if (choix.ToUpper() == "O")
+                if (choix)
                 {
                     boissonManager.SupprimerBoisson(boisson);
                 }

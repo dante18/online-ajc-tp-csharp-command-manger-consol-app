@@ -1,6 +1,8 @@
-﻿namespace TpCommandManagerMain.Models;
+﻿using TpCommandManagerMain.Abstractions;
 
-public class BoissonModel
+namespace TpCommandManagerMain.Models;
+
+public class BoissonModel : AbstractProduitModel
 {
     public int Id { get; private set; }
 
@@ -8,7 +10,7 @@ public class BoissonModel
 
     public float Kcal { get; private set; }
 
-    public BoissonModel(int id, bool petillant, float kcal)
+    public BoissonModel(int id, string nom, float prix, bool petillant, float kcal) : base(id, nom, prix)
     {
         this.Id = id;
         this.Petillant = petillant;

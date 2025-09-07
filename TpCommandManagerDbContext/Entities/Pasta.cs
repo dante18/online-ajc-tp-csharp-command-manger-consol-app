@@ -13,7 +13,9 @@ public class Pasta : Nourriture
 
     public Pasta() { }
 
-    public Pasta(string nom, float prix, bool vegetarien, string type) : base(nom, prix, vegetarien)
+    public Pasta(string nom, float prix, bool vegetarien, int type, int kCal) : base(nom, prix, vegetarien)
     {
+        this.Type = type;
+        this.Kcal = Kcal;
     }
 }

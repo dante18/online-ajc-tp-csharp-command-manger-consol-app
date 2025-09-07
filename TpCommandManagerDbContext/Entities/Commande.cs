@@ -13,11 +13,10 @@ public class Commande
     [Required]
     public DateTime DateCommande { get; set; }
 
-    [Required]
-    public DateTime DateLivraison { get; set; }
+    public DateTime? DateLivraison { get; set; }
 
     [Required]
-    public bool Status { get; set; }
+    public int Status { get; set; }
 
     [Required]
     public Utilisateur Utilisateur {  get; set; }
@@ -30,11 +29,11 @@ public class Commande
 
     public Commande() { }
 
-    public Commande(DateTime dateCommande, DateTime dateLivraison, bool status, Utilisateur utilisateur,
+    public Commande(int status, Utilisateur utilisateur,
         Adresse adresse, List<ProduitCommande> produitCommande)
     {
-        this.DateCommande = dateCommande;
-        this.DateLivraison = dateLivraison;
+        this.DateCommande = DateTime.Now;
+        this.DateLivraison = null;
         this.Status = status;
         this.Utilisateur = utilisateur;
         this.Adresse = adresse;

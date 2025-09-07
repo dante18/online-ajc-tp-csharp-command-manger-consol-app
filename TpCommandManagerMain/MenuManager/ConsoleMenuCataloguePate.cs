@@ -150,8 +150,8 @@ public class ConsoleMenuCataloguePate
             Pate pate = pateManager.ObtenirPate(GetUserEntry.GetEntier("Quelle pâte voulez vous supprimer ?"));
             AfficherPate(pate);
 
-            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pâte (O/N) ?");
-            if (choix.ToUpper() == "O")
+            bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette pâte (O/N) ?");
+            if (choix)
             {
                 pateManager.SupprimerPate(pate);
             }

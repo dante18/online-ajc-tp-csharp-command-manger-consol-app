@@ -153,7 +153,7 @@ public class ConsoleMenuCataloguePizza
 
         string nom = GetUserEntry.GetString("Saissez le nom de la pizza");
         float prix = GetUserEntry.GetEntier("Quel sera le prix de la pizza ?");
-        bool vegetarien = (GetUserEntry.GetString("Cette pizza est-elle végétarienne ? (O/N)").ToUpper() == "O") ? true : false;
+        bool vegetarien = GetUserEntry.GetBool("Cette pizza est-elle végétarienne ? (O/N)");
 
         List<Ingredient> ingredients = new List<Ingredient>();
         int choixIngredient = 0;
@@ -164,12 +164,12 @@ public class ConsoleMenuCataloguePizza
 
             string nomIngredient = GetUserEntry.GetString("Quel est le nom de l'ingrédient ?");
             float kcal = GetUserEntry.GetEntier("Combient de KCal vaut l'ingrédient ?");
-            bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (O/N)").ToUpper() == "O") ? true : false;
+            bool estAllergene = GetUserEntry.GetBool("Cet ingrédient est-il un allergène ? (O/N)");
 
             Ingredient ingredient = new Ingredient(nomIngredient, kcal, estAllergene);
             ingredients.Add(ingredient);
 
-            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre ingrédient ? (O/N)").ToUpper() == "N"))
+            if (!GetUserEntry.GetBool("Souhaitez-vous ajouter un autre ingrédient ? (O/N)"))
             {
                 choixAutreIngredient = false;
             }
@@ -265,8 +265,8 @@ public class ConsoleMenuCataloguePizza
         {
             Pizza pizza = pizzaManager.ObtenirPizza(GetUserEntry.GetEntier("Quelle pizza souhaitez vous supprimer ?"));
             AfficherPizza(pizza);
-            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette pizza ? (O/N) ");
-            if (choix.ToUpper() == "O" || choix.ToUpper() == "OUI")
+            bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette pizza ? (O/N) ");
+            if (choix)
             {
                 pizzaManager.SupprimerPizza(pizza);
             }

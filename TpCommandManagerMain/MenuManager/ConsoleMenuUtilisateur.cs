@@ -73,12 +73,8 @@ public class ConsoleMenuUtilisateur
         }
         else
         {
-            Console.WriteLine("### Information générale");
-            Console.WriteLine($"#{utilisateur.Id} - {utilisateur.Nom} - {utilisateur.Prenom} - {utilisateur.Telephone}");
-            Console.WriteLine("");
-
-            Console.WriteLine("### Adresse");
-            Console.WriteLine($"#{utilisateur.Adresse.Rue} - {utilisateur.Adresse.CodePostal} - {utilisateur.Adresse.Ville} - {utilisateur.Adresse.Region} - {utilisateur.Adresse.Pays}");
+            Console.WriteLine($"#{utilisateur.Id} - {utilisateur.Nom.ToUpper()} {utilisateur.Prenom} - {utilisateur.Telephone}");
+            Console.WriteLine($"{utilisateur.Adresse.Rue} - {utilisateur.Adresse.CodePostal} - {utilisateur.Adresse.Ville} - {utilisateur.Adresse.Region} - {utilisateur.Adresse.Pays}");
 
             Console.WriteLine("");
         }
@@ -308,8 +304,8 @@ public class ConsoleMenuUtilisateur
 
                 Utilisateur utilisateur = utilisateurManager.ObtenirUtilisateur(GetUserEntry.GetEntier("Quelle utilisateur souhaitez vous supprimer ?"));
                 AfficherUtilisateur(utilisateur);
-                string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette utilisateur ? (O/N) ");
-                if (choix.ToUpper() == "O" || choix.ToUpper() == "OUI")
+                bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette utilisateur ? (O/N) ");
+                if (choix)
                 {
                     utilisateurManager.SupprimerUtilisateur(utilisateur);
                 }
