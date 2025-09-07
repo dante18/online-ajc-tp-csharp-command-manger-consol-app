@@ -10,9 +10,9 @@ public class PastaModel : AbstractNourritureModel
 
     public float Kcal { get; private set; }
 
-    public PastaModel(int id, string nom, float prix, bool vegetarien, int type, float kcal) : base(id, nom, prix, vegetarien)
+    public PastaModel(int id, string nom, float prix, bool vegetarien, int type, float kCal) : base(id, nom, prix, vegetarien)
     {
         this.Type = type;
-        this.Kcal = kcal;
+        this.Kcal = kCal;
     }
 }

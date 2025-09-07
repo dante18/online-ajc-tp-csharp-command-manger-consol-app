@@ -8,7 +8,8 @@ do
     Console.WriteLine("1 : Gestion du menu");
     Console.WriteLine("2 : Gestion des utilisateurs");
     Console.WriteLine("3 : Gestion des commandes");
-    Console.WriteLine("4 : Quitter l'application");
+    Console.WriteLine("4 : Requêtes");
+    Console.WriteLine("5 : Quitter l'application");
 
     menuChoix = GetUserEntry.GetEntier("Que souhaitez-vous faire ?");
 
@@ -30,6 +31,11 @@ do
             break;
 
         case 4:
+            ConsoleMenuRequete requeteMenu = new ConsoleMenuRequete();
+            menuChoix = requeteMenu.DemarrerLeMemu();
+            break;
+
+        case 5:
             break;
 
         default:

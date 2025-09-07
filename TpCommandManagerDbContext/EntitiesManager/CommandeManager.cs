@@ -23,10 +23,10 @@ public class CommandeManager
 
     public Commande ObtenirCommande(int id)
     {
-        return _context.Commandes
+        return (Commande)_context.Commandes
             .Include(c => c.Utilisateur)
             .Include(c => c.Adresse)
-            .Include(pc => pc.ProduitCommande).ThenInclude(pc => pc.Produit).Where(commande => commande.Id == id).FirstOrDefault();
+            .Include(pc => pc.ProduitCommande).Where(c => c.Id == id).FirstOrDefault();
     }
 
     public void AjouterCommande(Commande commande)

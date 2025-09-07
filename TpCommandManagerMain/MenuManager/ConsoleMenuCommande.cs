@@ -68,30 +68,20 @@ public class ConsoleMenuCommande
     {
         if (commande == null)
         {
-            throw new Exception("Cette Commande n'existe pas");
+            throw new Exception("Cette commande n'existe pas");
         }
-        else
+        else  
         {
-            Console.WriteLine("### Information générale");
-            Console.WriteLine($"#{commande.Id} - {commande.DateCommande} - {commande.DateLivraison} - {(commande.Status ? "valider" : "" +
-                "non valider")}");
-            Console.WriteLine("");
-
-            Console.WriteLine("### Propriétaire de la commande");
-            Console.WriteLine($"#{commande.Utilisateur.Id} - {commande.Utilisateur.Nom} - {commande.Utilisateur.Prenom} - {commande.Utilisateur.Telephone}");
-            Console.WriteLine("");
-
-            Console.WriteLine("### Information de livraison de la commande");
-            Console.WriteLine($"#{commande.Utilisateur.Adresse.Rue} - {commande.Utilisateur.Adresse.CodePostal} - {commande.Utilisateur.Adresse.Ville} - {commande.Utilisateur.Adresse.Region} - {commande.Utilisateur.Adresse.Pays}");
-            Console.WriteLine("");
-
-            Console.WriteLine("### Contenu de la commande");
+            Console.WriteLine($"#{commande.Id} - Commandée le : {commande.DateCommande} - {(commande.Status == 2 ? "Livrée le : " + commande.DateLivraison + " - " : "")} Status : {(commande.Status == 1 ? "En cours" : "Livrée")}");
+            Console.WriteLine("\nPropriétaire de la commande");
+            Console.WriteLine($"#{commande.Utilisateur.Id} - {commande.Utilisateur.Nom.ToUpper()} {commande.Utilisateur.Prenom} - {commande.Utilisateur.Telephone}");
+            Console.WriteLine("\nContenu de la commande :");
             foreach (var produit in commande.ProduitCommande)
             {
-                Console.WriteLine($"#{produit.Produit.Id} - {produit.Produit.Nom} - {produit.Produit.Prix} euro");
+                Console.WriteLine($"    - {produit.Produit.Nom}, {produit.Produit.Prix} euro");
             }
 
-            Console.WriteLine("");
+            Console.WriteLine("\n----------------------------------");
         }
     }
 
@@ -165,7 +155,7 @@ public class ConsoleMenuCommande
         {
             foreach (Utilisateur u in utilisateurs)
             {
-                Console.WriteLine($"{u.Id} - {u.Nom} - {u.Prenom}");
+                Console.WriteLine($"{u.Id} - {u.Nom.ToUpper()} {u.Prenom}");
             }
 
             int choixUtilisateur = GetUserEntry.GetEntier($"\nChoisissez un utilisateur pour la commande");
@@ -181,13 +171,14 @@ public class ConsoleMenuCommande
             }
         } while (utilisateur is null);
 
-        DateTime dateCreation = GetUserEntry.GetDate("Saisissez la date de création de la commande");
-        DateTime dateLivraison = GetUserEntry.GetDate("Saisissez la date de livraison de la commande");
-
-        string status = GetUserEntry.GetString("Saissez le statut de la commande (non valider/valdier)");
+        DateTime dateCreation = DateTime.Now;
+        DateTime? dateLivraison = null;
+        int status = 1;
 
         List<Produit> produits = produitManager.ObtenirListProduit();
         List<ProduitCommande> produitCommandes = new List<ProduitCommande>();
+        Commande commande = new Commande(status, utilisateur, utilisateur.Adresse, produitCommandes);
+        commandeManager.AjouterCommande(commande);
 
         bool choixAutreProduit = true;
 
@@ -206,7 +197,7 @@ public class ConsoleMenuCommande
             try
             {
                 produit = produitManager.ObtenirProduit(choixProduit);
-                produitCommandes.Add(new ProduitCommande(produit.Id));
+                commande.ProduitCommande.Add(new ProduitCommande(commande, produit));
             }
             catch (Exception e)
             {
@@ -215,14 +206,12 @@ public class ConsoleMenuCommande
                 break;
             }
 
-            if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre produit ? (O/N)").ToUpper() == "N"))
+            if (!GetUserEntry.GetBool("Souhaitez-vous ajouter un autre produit ? (O/N)"))
             {
                 choixAutreProduit = false;
             }
         } while (choixAutreProduit == true);
-
-        Commande commande = new Commande(dateCreation, dateLivraison, (status == "valider" ? true : false), utilisateur, utilisateur.Adresse, produitCommandes);
-        commandeManager.AjouterCommande(commande);
+        commandeManager.MiseAJourCommande(commande);
     }
 
     private void MiseAJourCommande()
@@ -259,22 +248,24 @@ public class ConsoleMenuCommande
                 {
                     case 1:
                         Console.WriteLine("Quel champ voulez-vous modifier ?");
-                        Console.WriteLine("1 : Date de livraison");
-                        Console.WriteLine("2 : Statut de la commande");
-                        Console.WriteLine("3 : Quitter");
+                        Console.WriteLine("1 : Statut de la commande");
+                        Console.WriteLine("2 : Quitter");
 
                         int choix2 = GetUserEntry.GetEntier("\n");
 
                         switch (choix2)
                         {
                             case 1:
-                                DateTime dateLivraison = GetUserEntry.GetDate("Saisissez la date de livraison de la commande");
-                                commande.DateLivraison = dateLivraison;
+                                
+                                bool status = GetUserEntry.GetBool("La commande a-t-elle été livrée ? (O/N)");
+                                if (status)
+                                {
+                                    commande.Status = 2;
+                                    DateTime dateLivraison = DateTime.Now;
+                                    commande.DateLivraison = dateLivraison;
+                                }
                                 break;
-                            case 2:
-                                string status = GetUserEntry.GetString("Saisissez le statut de la commande (non valider/valdier)");
-                                commande.Status = status == "valider" ? true : false;
-                                break;
+
                             default:
                                 break;
                         }
@@ -331,7 +322,7 @@ public class ConsoleMenuCommande
                                 }
 
                                 int choixUtilisateur = GetUserEntry.GetEntier($"\nChoisissez un produit dans la liste");
-                                produitCommandes.Remove(produitCommandes.Where(p => p.ProduitId == choixUtilisateur)
+                                produitCommandes.Remove(produitCommandes.Where(p => p.Id == choixUtilisateur)
                                     .FirstOrDefault());
 
                                 commande.ProduitCommande = produitCommandes;
@@ -357,7 +348,7 @@ public class ConsoleMenuCommande
                                     try
                                     {
                                         produit = produitManager.ObtenirProduit(choixProduit);
-                                        produitCommandes.Add(new ProduitCommande(produit.Id));
+                                        produitCommandes.Add(new ProduitCommande(commande, produit));
                                     }
                                     catch (Exception e)
                                     {
@@ -366,7 +357,7 @@ public class ConsoleMenuCommande
                                         break;
                                     }
 
-                                    if ((GetUserEntry.GetString("Souhaitez-vous ajouter un autre produit ? (O/N)").ToUpper() == "N"))
+                                    if (!GetUserEntry.GetBool("Souhaitez-vous ajouter un autre produit ? (O/N)"))
                                     {
                                         choixAutreProduit = false;
                                     }
@@ -415,8 +406,8 @@ public class ConsoleMenuCommande
                 Commande commande = commandeManager.ObtenirCommande(GetUserEntry.GetEntier("Quelle Commande souhaitez vous supprimer ?"));
                 AfficherCommande(commande);
 
-                string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette Commande ? (O/N) ");
-                if (choix.ToUpper() == "O" || choix.ToUpper() == "OUI")
+                bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette Commande ? (O/N) ");
+                if (choix)
                 {
                     commandeManager.SupprimerCommande(commande);
                 }

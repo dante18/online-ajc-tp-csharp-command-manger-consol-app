@@ -5,9 +5,6 @@ namespace TpCommandManagerDbContext.Entities;
 
 public class Boisson : Produit
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
 
     [Required]
     public bool Petillant { get; set; }
@@ -17,7 +14,9 @@ public class Boisson : Produit
 
     public Boisson() { }
 
-    public Boisson(string nom, float prix, bool estPetillante, string type)
+    public Boisson(string nom, float prix, bool estPetillante, int kCal) : base(nom, prix)
     {
+        this.Petillant = estPetillante;
+        this.Kcal = kCal;
     }
 }

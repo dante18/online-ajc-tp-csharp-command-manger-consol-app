@@ -114,7 +114,7 @@ public class ConsoleMenuCatalogueIngredient
 
         string nom = GetUserEntry.GetString("Quel est le nom de l'ingrédient ?");
         float kcal = GetUserEntry.GetEntier("Combient de KCal vaut l'ingrédient ?");
-        bool estAllergene = (GetUserEntry.GetString("Cet ingrédient est-il un allergène ? (O/N)") == "O") ? true : false;
+        bool estAllergene = GetUserEntry.GetBool("Cet ingrédient est-il un allergène ? (O/N)");
 
         Ingredient i = new Ingredient(nom, kcal, estAllergene);
         IngredientManager im = new IngredientManager(context);
@@ -175,8 +175,8 @@ public class ConsoleMenuCatalogueIngredient
             Ingredient ingredient = ingredientManager.ObtenirIngredient(GetUserEntry.GetEntier("Quelle ingrédient voulez vous supprimer ?"));
             AfficherIngredient(ingredient);
 
-            string choix = GetUserEntry.GetString($"\nÊtes vous sûr de vouloir supprimer cette ingrédient (O/N) ?");
-            if (choix.ToUpper() == "O")
+            bool choix = GetUserEntry.GetBool($"\nÊtes vous sûr de vouloir supprimer cette ingrédient (O/N) ?");
+            if (choix)
             {
                 ingredientManager.SupprimerIngredient(ingredient);
             }

@@ -10,17 +10,15 @@ public class ProduitCommande
     public int Id { get; set; }
 
     [Required]
-    public int? CommandeId { get; set; }
+    public Commande Commande {  get; set; }
 
-    [Required]
-    public int? ProduitId {  get; set; }
-
-    public Produit Produit { get; set; } = null!;
+    public Produit Produit { get; set; }
 
     public ProduitCommande() { }
 
-    public ProduitCommande(int? produitId)
+    public ProduitCommande(Commande commande, Produit produit)
     {
-        this.ProduitId = produitId;
+        this.Commande = commande;
+        this.Produit = produit;
     }
 }

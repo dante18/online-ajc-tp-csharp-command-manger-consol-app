@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TpCommandManagerDbContext;
 
@@ -11,9 +12,11 @@ using TpCommandManagerDbContext;
 namespace TpCommandManagerDbContext.Migrations
 {
     [DbContext(typeof(TpCommandManagerContext))]
-    partial class TpCommandManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250907134330_Nullable_livraison")]
+    partial class Nullable_livraison
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
