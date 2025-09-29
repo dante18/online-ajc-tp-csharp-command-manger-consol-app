@@ -1,21 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TpCommandManagerDbContext.Entities;
+namespace TpCommandManagerData.Entities;
 
-public class Pate
+public class Doughs
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int? Id { get; set; }
 
     [Required]
-    public string Nom { get; set; }
-
-    public Pate() {}
-
-    public Pate(string nom)
-    {
-        this.Nom = nom;
-    }
+    public string Name { get; set; }
 }
