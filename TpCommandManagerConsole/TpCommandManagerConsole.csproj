@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Output\ConsoleMenuCatalog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TpCommandManagerService\TpCommandManagerService.csproj" />
   </ItemGroup>
 
