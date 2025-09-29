@@ -1,40 +1,41 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TpCommandManagerDbContext.Entities;
+using TpCommandManagerData.Context;
+using TpCommandManagerData.Entities;
 
-namespace TpCommandManagerDbContext.EntitiesManager;
+namespace TpCommandManagerData.Repositories;
 
-public class BurgerManager
+public sealed class BurgerRepository
 {
-    private readonly TpCommandManagerContext _context;
+    private readonly CommandStoreContext _context;
 
-    public BurgerManager(TpCommandManagerContext context)
+    public BurgerRepository(CommandStoreContext context)
     {
         _context = context;
     }
 
-    public List<Burger> ObtenirListBurger()
+    public List<Burger> GetAllBurgers()
     {
         return this._context.Burger.Include(p => p.Ingredients).ToList();
     }
 
-    public Burger ObtenirBurger(int id)
+    public Burger GetBurger(int id)
     {
         return this._context.Burger.Include(p => p.Ingredients).Where(burger => burger.Id == id).FirstOrDefault();
     }
 
-    public void AjouterBurger(Burger burger)
+    public void CreateBurger(Burger burger)
     {
         this._context.Burger.Add(burger);
         this._context.SaveChanges();
     }
 
-    public void MiseAJourBurger(Burger burger)
+    public void UpdateBurger(Burger burger)
     {
         this._context.Burger.Update(burger);
         this._context.SaveChanges();
     }
 
-    public void SupprimerBurger(Burger burger)
+    public void DeleteBurger(Burger burger)
     {
         this._context.Burger.Remove(burger);
         this._context.SaveChanges();
